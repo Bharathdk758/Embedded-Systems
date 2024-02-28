@@ -1,0 +1,38 @@
+/**
+ * Bharath Kumar Duraisamy Krishnamoorthi
+ * Advanced Embedded Systems
+ * Lab #1
+ * 09-05-2023
+ */
+#include <msp430.h> 
+
+
+/**
+ * main.c
+ * Function: The main function gets the input from the button and
+ * Accordingly provide the output (ON /OFF/BLINK) in the 'g' segment
+ * of the seven segment display
+ */
+int main(void)
+{
+	WDTCTL = WDTPW | WDTHOLD;	/* stop watchdog timer*/
+	P2DIR |= 0x01;   /* Set P2.0 as an output*/
+	P1DIR &= ~BIT0;/* Set P1.0 as an input (button)*/
+	int i = 0;
+	while(1){
+	    if((P1IN & BIT0)==0x00){    /* Check the condition of P1.0 (button)*/
+	        i=i+1;   /* Increment the counter if P1.0 is low*/
+	        __delay_cycles(500000); /* delay for avoiding multiple button presses*/
+	    }
+
+	    /* Perform LED control based on the counter value*/
+	    if(i%3==1)P2OUT=BIT1;   /* Turn on the LED*/
+	    if(i%3==2){     /*blink at 1Hz with 50% duty cycle*/
+	        P2OUT ^= 0x01;
+	        __delay_cycles(500000);
+	    }
+	    if(i%3==0)P2OUT=BIT0;   /* Turn off the LED*/
+	}
+	return 0;
+}
+
