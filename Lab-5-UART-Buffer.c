@@ -13,6 +13,7 @@
 #include <stdint.h>           // Using Standard Library for Mathematics Calculations
 
 // Declaring an Array of Hex Values (0x--)
+//disco disco
 int Display_Array[10]={0xC0,0xF9,0xA4,0xB0,0x99,0x92,0x82,0xF8, 0x80, 0x90};
 int i=0; // global variable for counter
 
